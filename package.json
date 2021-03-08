@@ -1,18 +1,18 @@
 {
-  "name": "auth-server",
+  "name": "ts-auth-server",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "build": "tsc",
     "clean": "tsc --build --clean",
-    "test": "mocha -r ts-node/register src/**/*.test.ts",
+    "test": "mocha --recursive --extension test.ts -r ts-node/register src/tests",
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "prestart": "npm run build",
     "start": "node ."
   },
   "description": "AuthServer",
   "author": {
-    "name": ""
+    "name": "Chris Elbert"
   },
   "main": "dist/app.js",
   "dependencies": {

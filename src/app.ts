@@ -1,4 +1,3 @@
-import debug from "debug";
 import express from "express";
 import path from "path";
 import cors from "cors";
@@ -33,7 +32,8 @@ app.set('port', process.env.PORT || 8080);
 createConnection().then(() => {
     // launch app
     const server = app.listen(app.get('port'), () => {
-        debug('Express server listening on port ' + server.address().port);
+        // tslint:disable-next-line:no-console
+        console.log('Express server listening on port ' + server.address().port)
     });
 }).catch(error => {
     // tslint:disable-next-line:no-console
