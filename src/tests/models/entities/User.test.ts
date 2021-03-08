@@ -28,7 +28,7 @@ describe("User Entity Validation Tests", () => {
 
         assert.equal(userValidationErrors.some(e => e.errorType === ValidationErrors.MISSING_VALUE), true);
     });
-    it("Validation function returns a validation error of type ValidationErrors.INVALID_VALUE when the username property is empty", () => {
+    it("Validate that 1 error is returned when username is empty", () => {
         const u = new User();
         u.id = 1;
         u.userName = '';
@@ -38,19 +38,7 @@ describe("User Entity Validation Tests", () => {
         const validationResult = u.validate();
         const userValidationErrors = validationResult.data.get('userName');
 
-        assert.equal(userValidationErrors.some(e => e.errorType === ValidationErrors.INVALID_VALUE), true);
-    });
-    it("Validate that 2 errors are returned when username is empty", () => {
-        const u = new User();
-        u.id = 1;
-        u.userName = '';
-        u.password = 'pass';
-        u.email = 'email@email.com';
-
-        const validationResult = u.validate();
-        const userValidationErrors = validationResult.data.get('userName');
-
-        assert.equal(userValidationErrors.length, 2);
+        assert.equal(userValidationErrors.length, 1);
     });
     it("Validate function returns a 422 when the userName property is not alphanumeric", () => {
         const u = new User();
@@ -212,18 +200,6 @@ describe("User Entity Validation Tests", () => {
 
         assert.equal(emailValidationErrors.some(e => e.errorType === ValidationErrors.MISSING_VALUE), true);
     });
-    it("Validate function returns a validation error of type ValidationErrors.INVALID_VALUE when the email property is empty", () => {
-        const u = new User();
-        u.id = 1;
-        u.userName = 'celbert';
-        u.password = 'password';
-        u.email = '';
-
-        const validationResult = u.validate();
-        const emailValidationErrors = validationResult.data.get('email');
-
-        assert.equal(emailValidationErrors.some(e => e.errorType === ValidationErrors.INVALID_VALUE), true);
-    });
     it("Validate function returns a validation error of type ValidationErrors.INVALID_VALUE when the email property is set but not in a valid email format", () => {
         const u = new User();
         u.id = 1;
@@ -271,7 +247,7 @@ describe("User Entity Validation Tests", () => {
 
         assert.equal(emailValidationErrors.some(e => e.errorType === ValidationErrors.INVALID_VALUE), true);
     });
-    it("Validate function returns two validation errors when the email property is empty", () => {
+    it("Validate function returns one validation error when the email property is empty", () => {
         const u = new User();
         u.id = 1;
         u.userName = 'celbert';
@@ -281,7 +257,7 @@ describe("User Entity Validation Tests", () => {
         const validationResult = u.validate();
         const emailValidationErrors = validationResult.data.get('email');
 
-        assert.equal(emailValidationErrors.length, 2);
+        assert.equal(emailValidationErrors.length, 1);
     });
 
     /** password validation tests */
@@ -309,7 +285,7 @@ describe("User Entity Validation Tests", () => {
 
         assert.equal(passwordValidationErrors.some(e => e.errorType === ValidationErrors.MISSING_VALUE), true);
     });
-    it("Validate function returns only 1 error", () => {
+    it("Validate function returns only 1 error when the password is empty", () => {
         const u = new User();
         u.id = 1;
         u.userName = 'user';
@@ -320,5 +296,16 @@ describe("User Entity Validation Tests", () => {
         const userValidationErrors = validationResult.data.get('password');
 
         assert.equal(userValidationErrors.length, 1);
+    });
+    it("Validate function returns a 200 when the model is valid", () => {
+        const u = new User();
+        u.id = 1;
+        u.userName = 'user';
+        u.password = 'password';
+        u.email = 'email@email.com';
+
+        const validationResult = u.validate();
+
+        assert.equal(validationResult.httpStatus, 200);
     });
 });

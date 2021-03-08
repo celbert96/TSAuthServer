@@ -68,7 +68,8 @@ export class User {
             }
         }
 
-        if (/^[a-z0-9]+$/i.test(this.userName) === false) {
+        // if the userName isn't empty, then validate the userName is in a valid format
+        else if (/^[a-z0-9]+$/i.test(this.userName) === false) {
             const err = new ValidationError('userName', ValidationErrors.INVALID_VALUE, 'Username must be alphanumeric');
             if (validationErrors.has('userName')) {
                 validationErrors.get('userName').push(err);
@@ -89,8 +90,7 @@ export class User {
                 validationErrors.set('email', [err]);
             }
         }
-
-        if (!EmailValidator.validate(this.email)) {
+        else if (!EmailValidator.validate(this.email)) {
             const err = new ValidationError('email', ValidationErrors.INVALID_VALUE, 'Email is improperly formatted');
 
             if (validationErrors.has('email')) {
