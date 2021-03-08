@@ -1,9 +1,8 @@
 import assert from "assert";
-import { ValidationError } from "../../../models/ValidationError";
 import { User } from "../../../models/entities/User";
 import { ValidationErrors } from "../../../models/ValidationErrors";
 
-describe("User Entity Test", () => {
+describe("User Entity Validation Tests", () => {
     /*** userName validation tests ***/
     it("Validate function returns a 422 when the username property is empty", () => {
         const u = new User();
@@ -284,6 +283,8 @@ describe("User Entity Test", () => {
 
         assert.equal(emailValidationErrors.length, 2);
     });
+
+    /** password validation tests */
     it("Validate function returns a 422 when the password field is missing", () => {
         const u = new User();
         u.id = 1;
@@ -296,8 +297,6 @@ describe("User Entity Test", () => {
         assert.equal(validationResult.httpStatus, 422);
 
     });
-
-    /** password validation tests */
     it("Validate function returns a validation error of type ValidationErrors.MISSING_VALUE when the password property is empty", () => {
         const u = new User();
         u.id = 1;
@@ -309,5 +308,17 @@ describe("User Entity Test", () => {
         const passwordValidationErrors = validationResult.data.get('password');
 
         assert.equal(passwordValidationErrors.some(e => e.errorType === ValidationErrors.MISSING_VALUE), true);
+    });
+    it("Validate function returns only 1 error", () => {
+        const u = new User();
+        u.id = 1;
+        u.userName = 'user';
+        u.password = '';
+        u.email = 'email@email.com';
+
+        const validationResult = u.validate();
+        const userValidationErrors = validationResult.data.get('password');
+
+        assert.equal(userValidationErrors.length, 1);
     });
 });
