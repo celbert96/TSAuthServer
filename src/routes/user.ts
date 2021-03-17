@@ -2,10 +2,9 @@
  * GET users listing.
  */
 import express = require('express');
+import {UserController} from "../controllers/UserController";
 const router = express.Router();
 
-router.get('/', (req: express.Request, res: express.Response) => {
-    res.send("respond with a resource");
-});
+router.post('/', UserController.createNewUser);
 
 export default router;

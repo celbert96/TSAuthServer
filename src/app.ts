@@ -6,6 +6,7 @@ import { createConnection } from "typeorm";
 
 import routes from './routes/index';
 import users from './routes/user';
+import auth from './routes/auth';
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/auth', auth);
 
 // set the port that the application will use, default 8080
 app.set('port', process.env.PORT || 8080);

@@ -1,11 +1,16 @@
 /*
  * GET home page.
  */
-import express = require('express');
+import express from "express";
 const router = express.Router();
 
-router.get('/', (req: express.Request, res: express.Response) => {
-    res.render('index', { title: 'Express' });
-});
+
+// router.post('/signin', (req: express.Request, res: express.Response) =>> {
+//
+// });
+
+// router.get('/', (req: express.Request, res: express.Response) => {
+//     res.render('index', { title: 'Express' });
+// });
 
 export default router;
