@@ -8,14 +8,14 @@ import express from "express";
 export class UserController {
     static createNewUser = async(req: express.Request, res: express.Response) => {
         const user = new User();
-        user.userName = req.body.userName;
+        user.userName = req.body.username;
         user.email = req.body.email;
         user.password = req.body.password;
 
         const userValidationResult = user.validate();
 
         if(userValidationResult.httpStatus !== 200) {
-            return userValidationResult;
+            return res.status(userValidationResult.httpStatus).json(userValidationResult);
         }
 
         const roleGetResult = await new RoleRepository().getRoleByID(Roles.USER_STANDARD);

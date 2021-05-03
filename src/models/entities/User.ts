@@ -53,29 +53,29 @@ export class User {
     }
 
     /** Validate property values */
-    validate(): ApiResponse<Map<string, ValidationError[]>> {
-        const validationErrors: Map<string, ValidationError[]> = new Map();
+    validate(): ApiResponse<Record<string, ValidationError[]>> {
+        const validationErrors: Record<string, ValidationError[]> = {};
 
         /** userName validations */
         if (this.userName === undefined || this.userName === '') {
             const err = new ValidationError('userName', ValidationErrors.MISSING_VALUE, 'Username is required');
 
-            if (validationErrors.has('userName')) {
-                validationErrors.get('userName').push(err);
+            if ('userName' in validationErrors) {
+                validationErrors.userName.push(err);
             }
             else {
-                validationErrors.set('userName', [err]);
+                validationErrors.userName =  [err];
             }
         }
 
         // if the userName isn't empty, then validate the userName is in a valid format
         else if (/^[a-z0-9]+$/i.test(this.userName) === false) {
             const err = new ValidationError('userName', ValidationErrors.INVALID_VALUE, 'Username must be alphanumeric');
-            if (validationErrors.has('userName')) {
-                validationErrors.get('userName').push(err);
+            if ('userName' in validationErrors) {
+                validationErrors.userName.push(err);
             }
             else {
-                validationErrors.set('userName', [err]);
+                validationErrors.userName = [err];
             }
         }
 
@@ -83,41 +83,41 @@ export class User {
         if (this.email === undefined || this.email === '') {
             const err = new ValidationError('email', ValidationErrors.MISSING_VALUE, 'Email is required');
 
-            if (validationErrors.has('email')) {
-                validationErrors.get('email').push(err);
+            if ('email' in validationErrors) {
+                validationErrors.email.push(err);
             }
             else {
-                validationErrors.set('email', [err]);
+                validationErrors.email =  [err];
             }
         }
         else if (!EmailValidator.validate(this.email)) {
             const err = new ValidationError('email', ValidationErrors.INVALID_VALUE, 'Email is improperly formatted');
 
-            if (validationErrors.has('email')) {
-                validationErrors.get('email').push(err);
+            if ('email' in validationErrors) {
+                validationErrors.email.push(err);
             }
             else {
-                validationErrors.set('email', [err]);
+                validationErrors.email = [err];
             }
         }
 
         /** password validation */
         if (this.password === undefined || this.password === '') {
             const err = new ValidationError('password', ValidationErrors.MISSING_VALUE, 'Password is required')
-            if (validationErrors.has('password')) {
-                validationErrors.get('password').push(err);
+            if ('password' in validationErrors) {
+                validationErrors.password.push(err);
             }
             else {
-                validationErrors.set('password', [err]);
+                validationErrors.password = [err];
             }
         }
 
 
-        if (validationErrors.size === 0) {
-            return new ApiResponse<Map<string, ValidationError[]>>(200, 'Model is valid', validationErrors);
+        if (Object.keys(validationErrors).length === 0) {
+            return new ApiResponse<Record<string, ValidationError[]>>(200, 'Model is valid', validationErrors);
         }
 
-        return new ApiResponse<Map<string, ValidationError[]>>(422, 'Model is invalid', validationErrors);
+        return new ApiResponse<Record<string, ValidationError[]>>(422, 'Model is invalid', validationErrors);
     }
 
 }

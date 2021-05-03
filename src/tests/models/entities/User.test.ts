@@ -24,7 +24,7 @@ describe("User Entity Validation Tests", () => {
         u.email = 'email@email.com';
 
         const validationResult = u.validate();
-        const userValidationErrors = validationResult.data.get('userName');
+        const userValidationErrors = validationResult.data.userName;
 
         assert.equal(userValidationErrors.some(e => e.errorType === ValidationErrors.MISSING_VALUE), true);
     });
@@ -36,7 +36,7 @@ describe("User Entity Validation Tests", () => {
         u.email = 'email@email.com';
 
         const validationResult = u.validate();
-        const userValidationErrors = validationResult.data.get('userName');
+        const userValidationErrors = validationResult.data.userName;
 
         assert.equal(userValidationErrors.length, 1);
     });
@@ -196,7 +196,7 @@ describe("User Entity Validation Tests", () => {
         u.email = '';
 
         const validationResult = u.validate();
-        const emailValidationErrors = validationResult.data.get('email');
+        const emailValidationErrors = validationResult.data.email;
 
         assert.equal(emailValidationErrors.some(e => e.errorType === ValidationErrors.MISSING_VALUE), true);
     });
@@ -208,42 +208,42 @@ describe("User Entity Validation Tests", () => {
         u.email = 'email';
 
         let validationResult = u.validate();
-        let emailValidationErrors = validationResult.data.get('email');
+        let emailValidationErrors = validationResult.data.email;
 
         assert.equal(emailValidationErrors.some(e => e.errorType === ValidationErrors.INVALID_VALUE), true);
 
         u.email = 'email@';
 
         validationResult = u.validate();
-        emailValidationErrors = validationResult.data.get('email');
+        emailValidationErrors = validationResult.data.email;
 
         assert.equal(emailValidationErrors.some(e => e.errorType === ValidationErrors.INVALID_VALUE), true);
 
         u.email = 'email@!';
 
         validationResult = u.validate();
-        emailValidationErrors = validationResult.data.get('email');
+        emailValidationErrors = validationResult.data.email;
 
         assert.equal(emailValidationErrors.some(e => e.errorType === ValidationErrors.INVALID_VALUE), true);
 
         u.email = 'email@email';
 
         validationResult = u.validate();
-        emailValidationErrors = validationResult.data.get('email');
+        emailValidationErrors = validationResult.data.email;
 
         assert.equal(emailValidationErrors.some(e => e.errorType === ValidationErrors.INVALID_VALUE), true);
 
         u.email = 'email@email.';
 
         validationResult = u.validate();
-        emailValidationErrors = validationResult.data.get('email');
+        emailValidationErrors = validationResult.data.email;
 
         assert.equal(emailValidationErrors.some(e => e.errorType === ValidationErrors.INVALID_VALUE), true);
 
         u.email = 'email@email.c';
 
         validationResult = u.validate();
-        emailValidationErrors = validationResult.data.get('email');
+        emailValidationErrors = validationResult.data.email;
 
         assert.equal(emailValidationErrors.some(e => e.errorType === ValidationErrors.INVALID_VALUE), true);
     });
@@ -255,7 +255,7 @@ describe("User Entity Validation Tests", () => {
         u.email = '';
 
         const validationResult = u.validate();
-        const emailValidationErrors = validationResult.data.get('email');
+        const emailValidationErrors = validationResult.data.email;
 
         assert.equal(emailValidationErrors.length, 1);
     });
@@ -281,7 +281,7 @@ describe("User Entity Validation Tests", () => {
         u.email = 'email@email.com';
 
         const validationResult = u.validate();
-        const passwordValidationErrors = validationResult.data.get('password');
+        const passwordValidationErrors = validationResult.data.password;
 
         assert.equal(passwordValidationErrors.some(e => e.errorType === ValidationErrors.MISSING_VALUE), true);
     });
@@ -293,7 +293,7 @@ describe("User Entity Validation Tests", () => {
         u.email = 'email@email.com';
 
         const validationResult = u.validate();
-        const userValidationErrors = validationResult.data.get('password');
+        const userValidationErrors = validationResult.data.password;
 
         assert.equal(userValidationErrors.length, 1);
     });
