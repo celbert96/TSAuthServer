@@ -35,7 +35,27 @@ export class UserController {
         return res.status(userAddResult.httpStatus).json(userAddResult);
     }
 
-    static getUserByUsername = async(username: string, includePassword = false) => {
-        return await new UserRepository().getExistingUserByUsername(username, includePassword);
+    static getUserById = async(req: express.Request, res: express.Response) => {
+        const userId = Number(req.params.userId);
+        if(isNaN(userId))
+        {
+            const errRes = new ApiResponse(400, "User ID must be an integer");
+            return res.status(errRes.httpStatus).json(errRes);
+        }
+
+        const userGetResult = await new UserRepository().getExistingUser(userId);
+        return res.status(userGetResult.httpStatus).json(userGetResult);
+    }
+
+    static getUserByUsername = async(req: express.Request, res: express.Response) => {
+        const userName = req.params.userName;
+        if(userName === undefined || userName === "")
+        {
+            const errRes = new ApiResponse(400, "Missing username");
+            return res.status(errRes.httpStatus).json(errRes);
+        }
+        const userGetResult = await new UserRepository().getExistingUserByUsername(userName);
+
+        return res.status(userGetResult.httpStatus).json(userGetResult);
     }
 }

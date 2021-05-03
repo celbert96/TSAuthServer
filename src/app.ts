@@ -41,5 +41,3 @@ createConnection().then(() => {
     // tslint:disable-next-line:no-console
     console.error('FATAL: COULD NOT CONNECT TO DATABASE: ' + error.message);
 });
-
-

@@ -15,6 +15,7 @@ import { compare } from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import {ApiResponse} from "../models/ApiResponse";
 import {UserDTO} from "../models/dtos/UserDTO";
+import { UserRepository } from "../repositories/UserRepository";
 
 export class AuthController {
     /**
@@ -112,7 +113,7 @@ export class AuthController {
      * and an error message is returned
      */
     static async verifyUserCredentials(userName: string, password: string): Promise<ApiResponse<any>> {
-        const userGetResult = await UserController.getUserByUsername(userName, true);
+        const userGetResult = await new UserRepository().getExistingUserByUsername(userName, true);
 
         if(userGetResult.httpStatus !== 200) {
             return userGetResult;
