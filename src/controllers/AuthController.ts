@@ -55,10 +55,24 @@ export class AuthController {
             {"userData": userDTO}
         );
 
+        const tokenExpiration = new Date().getDate() + 1;
         return res.cookie('sessionToken', token, {
-            expires: new Date(Date.now() + 90000),
+            expires: new Date(Date.now() + 21536000000),
+            sameSite: 'strict',
             httpOnly: true
         }).status(responseBody.httpStatus).json(responseBody);
+    }
+
+    /**
+     * Removes the 'sessionToken' cookie from the client. Because the cookie is HttpOnly, the client application 
+     * can't remove the cookie on its own.
+     * 
+     * @param req The Express Request object
+     * @param res The Express Response object
+     * @returns A Promise of type express.Response
+     */
+    static async removeSessionCookie(req: express.Request, res: express.Response): Promise<express.Response> {
+        return res.clearCookie('sessionToken').status(200).json(new ApiResponse(200, 'Removed Session Cookie'));
     }
 
     /**

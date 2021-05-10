@@ -4,5 +4,6 @@ const router = express.Router();
 
 router.post('/setSessionCookie', AuthController.setSessionCookie);
 router.post('/getAuthToken', AuthController.getAuthToken);
+router.post('/removeSessionCookie', AuthController.removeSessionCookie);
 
 export default router;
